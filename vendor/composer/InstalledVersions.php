@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '54f5edd6f27bc2f41ba21dad4557cf0a3e9ce78d',
+    'reference' => 'aae60e2f347411baedfccc5366f8b17343e7ec3e',
     'name' => 'winicius-leal/ecommerce',
   ),
   'versions' => 
@@ -69,7 +69,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '54f5edd6f27bc2f41ba21dad4557cf0a3e9ce78d',
+      'reference' => 'aae60e2f347411baedfccc5366f8b17343e7ec3e',
     ),
   ),
 );
