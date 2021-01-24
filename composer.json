@@ -1,0 +1,15 @@
+{
+    "name": "winicius-leal/ecommerce",
+    "description":"meu primeiro projeto ecommerce",
+    "type": "project",
+    "authors": [{
+    	"name": "winicius-leal",
+    	"email": "winiciusleal@hotmail.com"
+    }],
+    "minimum-stability": "dev",
+    "require": {
+    	"phpmailer/phpmailer": "~5.2",
+    	 "rain/raintpl": ">=3.0.0",
+    	 "slim/slim": "2.0"
+    }
+}
