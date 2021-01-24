@@ -14,7 +14,7 @@
     },
     "autoload":{
         "psr-4":{
-            "": "vendor\\winicius-leal\\php-classes\\src"
+            "": "vendor\\ecommerce\\php-classes\\src"
         }
     }
 }
