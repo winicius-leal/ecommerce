@@ -32,8 +32,8 @@ class Model {
 			switch ($method)
 			{
 
-				case "get":
-					return $this->values[$fieldName]; //retorna o valor do array "values"
+				case "get": //if ternario: se values[$fieldName] foi definida retorna ela, se nao, retorna null pra quem chamar o metodo get
+					return (isset($this->values[$fieldName])) ? $this->values[$fieldName] : NULL; //retorna o valor do array "values"
 				break;
 
 				case "set":

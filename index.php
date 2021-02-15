@@ -6,6 +6,7 @@ use Rain\Tpl;
 use Principal\Page;
 use Principal\PageAdmin;
 use Principal\Model\User;
+use Principal\Model\Category;
 
 
 $app = new \Slim\Slim();
@@ -14,6 +15,11 @@ $app->get('/', function () {
 	$page = new Page();
 	$page->setTpl("index");
 });
+
+
+
+			//ROTA PARA ADMIN
+//-----------------------------------------------------//
 
 $app->get('/admin/', function () {
 
@@ -38,6 +44,11 @@ $app->post('/admin/login/', function () {
 
 
 
+
+
+
+			//ROTA PARA USUARIO
+//-----------------------------------------------------//
 
 //ROTA PARA LISTAR NA TELA TODOS OS USUARIOS
 $app->get('/admin/users/', function () {
@@ -91,11 +102,65 @@ $app->post('/admin/users/:iduser', function ($iduser) {
 	$user->setData($_POST);
 	$user->update();
 	echo "<script>document.location='/admin/users'</script>";
-	exit;
+	exit; 
 	
 });
 
 
+
+
+
+
+
+			//ROTA PARA CATEGORIES
+//-----------------------------------------------------//
+
+$app->get('/admin/categories', function () {
+	User::verifyLogin();
+	$category = new Category();
+	$categories = $category->listAll();
+	$page = new PageAdmin();
+	$page->setTpl("categories", array("categories"=>$categories));
+});
+
+$app->get('/admin/categories/create', function () {
+	User::verifyLogin();
+	$page = new PageAdmin();
+	$page->setTpl("categories-create");
+});
+
+$app->post('/admin/categories/create', function () {
+	User::verifyLogin();
+	$category = new Category();
+	$category->setData($_POST);
+	$category->save();
+	echo "<script>document.location='/admin/categories'</script>";
+});
+
+$app->get('/admin/categories/:idcategory/delete', function ($idcategory) {
+	User::verifyLogin();
+	$category = new Category();
+	$category->get((int)$idcategory);
+	$category->delete();
+	echo "<script>document.location='/admin/categories'</script>";
+});
+
+$app->get('/admin/categories/:idcategory', function ($idcategory) {
+	User::verifyLogin();
+	$category = new Category();
+	$category->get((int)$idcategory);
+	$page = new PageAdmin();
+	$page->setTpl("categories-update", array("category"=>$category->getValues()));
+});
+
+$app->post('/admin/categories/:idcategory', function ($idcategory) {
+	User::verifyLogin();
+	$category = new Category();
+	$category->get((int)$idcategory);
+	$category->setData($_POST);
+	$category->save();
+	echo "<script>document.location='/admin/categories'</script>";
+});
 
 $app->run();
 
