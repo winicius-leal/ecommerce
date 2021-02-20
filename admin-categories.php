@@ -2,6 +2,7 @@
 use \Principal\Model\User;
 use \Principal\PageAdmin;
 use \Principal\Model\Category;
+use \Principal\Model\Product;
 
 $app->get('/admin/categories', function () {
 	User::verifyLogin();
@@ -48,6 +49,7 @@ $app->post('/admin/categories/:idcategory', function ($idcategory) {
 	$category->setData($_POST);
 	$category->save();
 	echo "<script>document.location='/admin/categories'</script>";
+	exit;
 });
 
 
@@ -55,16 +57,42 @@ $app->post('/admin/categories/:idcategory', function ($idcategory) {
 
 
 
-
-			//ROTA PARA CATEGORIES - SITE
+			//ROTA PARA CATEGORIES X PRODUCTS 
 //-----------------------------------------------------//
 
 
-$app->get('/categories/:idcategory', function ($idcategory) {
+$app->get('/admin/categories/:idcategory/product', function ($idcategory) {
+	User::verifyLogin();
 	$category = new Category();
 	$category->get((int)$idcategory);
-	$page = new Page();
-	$page->setTpl("category", array("category"=>$category->getValues(), "products"=>[]));
+	$page = new PageAdmin();
+	$page->setTpl("categories-products", array(
+		"category"=>$category->getValues(), 
+		"productsRelated"=>$category->getProducts(true),
+		"productsNotRelated"=>$category->getProducts(false)
+	));
+});
+
+$app->get('/admin/categories/:idcategory/product/:idproduct/add', function ($idcategory, $idproduct) {
+	User::verifyLogin();
+	$category = new Category();
+	$category->get((int)$idcategory);
+	$product = new Product();
+	$product->get((int)$idproduct);
+	$category->addProduct($product);
+	echo "<script>document.location='/admin/categories/".$idcategory."/product'</script>";
+	exit;
+});
+
+$app->get('/admin/categories/:idcategory/product/:idproduct/remove', function ($idcategory, $idproduct) {
+	User::verifyLogin();
+	$category = new Category();
+	$category->get((int)$idcategory);
+	$product = new Product();
+	$product->get((int)$idproduct);
+	$category->removeProduct($product);
+	echo "<script>document.location='/admin/categories/".$idcategory."/product'</script>";
+	exit;
 });
 
 ?>
