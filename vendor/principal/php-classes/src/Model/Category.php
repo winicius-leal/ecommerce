@@ -23,6 +23,8 @@ class Category extends Model {
 		));
 
 		$this->setData($results[0]); //coloca no obj novamente os atributos do usuario que acabou de ser persistido no banco atraves da procedure
+
+		Category::updateFile();//chama a function para atualizar no index a lista de categorias
 	}
 
 	public function get($idcategory){//recebe como parametro o id do usuario que eu quero alterar
@@ -50,6 +52,8 @@ class Category extends Model {
 
 		$this->setData($results[0]); //coloca no obj novamente os atributos do usuario que acabou de ser persistido no banco atraves da procedure
 
+		
+
 	}
 	public function delete(){
 
@@ -58,6 +62,22 @@ class Category extends Model {
 		$sql->query("DELETE FROM tb_categories WHERE idcategory = :idcategory", array(
 			":idcategory"=>$this->getidcategory()
 		));
+
+		Category::updateFile(); //chama a function para atualizar no index a lista de categorias
+
+
+	}
+
+	public static function updateFile(){
+		$categories = Category::listAll(); //traz do banco todos os registros de categorias
+		$html = []; //array vazio
+
+		foreach ($categories as $row) {
+			array_push($html, '<li><a href="/categories/'.$row['idcategory'].'">'.$row['descategory'].'</a></li>');
+		}
+
+		// essa funcao :  file_put_contents(filename, data) -> grava dados em um arquivo
+		file_put_contents($_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . "views" . DIRECTORY_SEPARATOR . "categories-menu.html", implode('', $html)); //implode faz um array virar uma string
 
 
 	}
