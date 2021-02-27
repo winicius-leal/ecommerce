@@ -52,6 +52,8 @@ class Product extends Model {
 			
 	}
 
+
+
 	public function update(){
 
 		$sql = new Sql();
@@ -137,6 +139,24 @@ class Product extends Model {
 		$this->checkPhoto();
 
 	}
+
+	public function getFromURL($desurl){//recebe como parametro o id do usuario que eu quero alterar
+		$sql = new Sql();
+		$results = $sql->select("SELECT * FROM tb_products WHERE desurl = :desurl", array(
+			":desurl"=>$desurl
+		));
+
+		$this->setData($results[0]);//coloca no obj o resultado da busca feita no select
+			
+	}
+	 public function getCategories(){
+	 	$sql = new Sql();
+		return $sql->select("
+			SELECT * FROM tb_categories a INNER JOIN tb_productscategories b ON a.idcategory = b.idcategory WHERE b.idproduct = :idproduct", array(
+			":idproduct"=>$this->getidproduct()
+		));
+
+	 }
 
 
 
