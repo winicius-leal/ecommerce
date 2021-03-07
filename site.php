@@ -2,6 +2,7 @@
 use \Principal\Page;
 use \Principal\Model\Product;
 use \Principal\Model\Category;
+use \Principal\Model\Cart;
 
 $app->get('/', function () {
 
@@ -47,6 +48,14 @@ $app->get('/product/:desurl', function ($desurl) {
 	$product->getFromURL($desurl);
 	$page = new Page();
 	$page->setTpl("product-detail", array("product"=>$product->getValues(),"categories"=>$product->getCategories()));
+
+});
+
+$app->get('/cart', function () {
+	$cart = new Cart();
+	$cart->getFromSession();
+	$page = new Page();
+	$page->setTpl("cart");
 
 });
 

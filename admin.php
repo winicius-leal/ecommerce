@@ -20,4 +20,13 @@ $app->post('/admin/login/', function () {
 	echo "<script>document.location='/admin/'</script>";
 });
 
+$app->get('/admin/logout', function() {
+
+	User::logout();
+	echo "<script>document.location='/admin/login'</script>";
+	exit;
+
+});
+
+
 ?>

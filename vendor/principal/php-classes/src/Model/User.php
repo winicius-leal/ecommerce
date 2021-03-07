@@ -12,6 +12,7 @@ class User extends Model {
 	//protected $fields = [
 	//	"iduser", "idperson", "deslogin", "despassword", "inadmin", "dtergister"
 	//];
+	
 
 	public static function login($login, $password):User
 	{
@@ -40,7 +41,6 @@ class User extends Model {
 
 			$_SESSION[User::SESSION] = $user->getValues();
 
-			
 			return $user; //retorna o obj do usuario encontrado
 
 		} else {//senha invalida
@@ -61,20 +61,9 @@ class User extends Model {
 	public static function verifyLogin($inadmin = true)
 	{
 
-		
-
-		if (
-			!isset($_SESSION[User::SESSION]) // se a constante não foi definida
-			|| // ou
-			!$_SESSION[User::SESSION]// se for falsa ou perdeu valor
-			|| //ou
-			!(int)$_SESSION[User::SESSION]["iduser"] > 0 //se o iduser>0 é pq existe um id 
-			||//ou
-			(bool)$_SESSION[User::SESSION]["iduser"] !== $inadmin //verifica se esse usuario tem permissao de administrador 
+		if (!User::checkLogin($inadmin)) {
 			
-		) {
-			
-			header("Location: /admin/login");
+			echo "<script>document.location='/admin/login'</script>";
 			exit;
 
 		}
@@ -139,6 +128,54 @@ class User extends Model {
 
 
 	}
+
+
+
+
+	//function usada no Cart
+
+	public static function getFromSession(){
+
+		$user = new User();
+		
+		if (isset($_SESSION[User::SESSION])&&(int)$_SESSION[User::SESSION]['iduser']>0) { //se existir a sessao 
+			
+			$user->setData($_SESSION[User::SESSION]);//seta no obj os valores da session
+		}
+		return $user; //retorna  o obj 
+	}
+
+	public static function checkLogin($inadmin = true){
+		
+		if (
+			!isset($_SESSION[User::SESSION]) // se a constante não foi definida
+			|| // ou
+			!$_SESSION[User::SESSION]// se for falsa ou perdeu valor
+			|| //ou
+			!(int)$_SESSION[User::SESSION]["iduser"] > 0 //se o iduser>0 é pq existe um id
+		){
+			//nao esta logado, logo retorna falso
+			return false;
+
+		}else{
+
+			if ($inadmin === true && (bool)$_SESSION[User::SESSION]["inadmin"] === true) { //rota de admin
+
+				return true;
+
+			}else if ($inadmin === false) { //rota de usuario comun
+				
+				return true;
+
+			}else{
+				//nao esta logado
+				return false;
+			}
+
+		}
+	}
+
+
 
 }
 
