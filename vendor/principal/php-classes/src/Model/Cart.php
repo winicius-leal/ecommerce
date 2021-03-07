@@ -128,7 +128,7 @@ class Cart extends Model {
 
 	}
 
-	public function addProduct(Product $product)
+	public function addProduct(Product $product)//recebe um obj do tipo Product
 	{
 
 		$sql = new Sql();
@@ -138,7 +138,7 @@ class Cart extends Model {
 			':idproduct'=>$product->getidproduct()
 		]);
 
-		$this->getCalculateTotal();
+		//$this->getCalculateTotal();
 
 	}
 
@@ -147,7 +147,7 @@ class Cart extends Model {
 
 		$sql = new Sql();
 
-		if ($all) {
+		if ($all) { // se for === true
 
 			$sql->query("UPDATE tb_cartsproducts SET dtremoved = NOW() WHERE idcart = :idcart AND idproduct = :idproduct AND dtremoved IS NULL", [
 				':idcart'=>$this->getidcart(),

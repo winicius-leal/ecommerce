@@ -53,9 +53,63 @@ $app->get('/product/:desurl', function ($desurl) {
 
 $app->get('/cart', function () {
 	$cart = new Cart();
-	$cart->getFromSession();
+	$cart = $cart->getFromSession();
 	$page = new Page();
-	$page->setTpl("cart");
+	$page->setTpl("cart", array(
+		"cart"=>$cart->getValues(),
+		"products"=>$cart->getProducts()
+	));
+
+});
+
+$app->get("/cart/:idproduct/add", function($idproduct){
+
+	$product = new Product();
+
+	$product->get((int)$idproduct);
+
+	$cart = Cart::getFromSession();//pega o carrinho da session ou cria um
+	
+	$qtd = (isset($_GET['qtd'])) ? (int)$_GET['qtd'] : 1; //if ternario, se for 
+
+	for ($i = 0; $i < $qtd; $i++) {
+		
+		$cart->addProduct($product);//adiciona o produto na tb_cartsproducts
+
+	}
+
+	echo "<script>document.location='/cart'</script>";
+	exit;
+
+});
+
+$app->get("/cart/:idproduct/minus", function($idproduct){
+
+	$product = new Product();
+
+	$product->get((int)$idproduct);
+
+	$cart = Cart::getFromSession();
+
+	$cart->removeProduct($product);
+
+	echo "<script>document.location='/cart'</script>";
+	exit;
+
+});
+
+$app->get("/cart/:idproduct/remove", function($idproduct){
+
+	$product = new Product();
+
+	$product->get((int)$idproduct);
+
+	$cart = Cart::getFromSession();
+
+	$cart->removeProduct($product, true);
+
+	echo "<script>document.location='/cart'</script>";
+	exit;
 
 });
 
