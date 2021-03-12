@@ -18,14 +18,14 @@ class Cart extends Model {
 		$cart = new Cart();
 
 		if (isset($_SESSION[Cart::SESSION]) && (int)$_SESSION[Cart::SESSION]['idcart'] > 0) { //se existir a sessao e idcart for > 0 significa que ja existe esse carrinho no banco de dados e ele ja esta na SESSION
-	
+			
 			$cart->get((int)$_SESSION[Cart::SESSION]['idcart']);//chama o get que vai no banco e retorna o value desse carrinho
 
-		} else {
-
 			
-			$cart->getFromSessionID();
 
+		} else {
+			
+			$cart->getFromSessionID();//pega o cart do banco where session_id 
 			
 			if (!(int)$cart->getidcart() > 0) { //se nao conseguiu carregar o carrinho do banco
 
@@ -42,11 +42,11 @@ class Cart extends Model {
 					'dessessionid'=>session_id()
 				];
 				
-				$user = User::getFromSession();
+				$user = User::getFromSession();//se houver um usuario na session traz ele
 
 				
 
-				if (User::checkLogin(false) === true) {
+				if (User::checkLogin(false) === true) {//(false) rota para usuario comun
 
 					$user = User::getFromSession();
 					
@@ -138,7 +138,7 @@ class Cart extends Model {
 			':idproduct'=>$product->getidproduct()
 		]);
 
-		//$this->getCalculateTotal();
+		$this->getCalculateTotal();
 
 	}
 
@@ -212,20 +212,23 @@ class Cart extends Model {
 	public function setFreight($nrzipcode)
 	{
 
-		$nrzipcode = str_replace('-', '', $nrzipcode);
+		$nrzipcode = str_replace('-', '', $nrzipcode);//troca o - por nada
 
-		$totals = $this->getProductsTotals();
+		$totals = $this->getProductsTotals();//retrna a soma dos produtos no cart
+
 
 		if ($totals['nrqtd'] > 0) {
-
+			//dimensoes que o correios aceitam
+			//MIN - MAX Comprimento (C): 15 cm – 100 cm Largura (L): 10 cm – 100 cm Altura (A): 1 cm – 100 cm
 			if ($totals['vlheight'] < 2) $totals['vlheight'] = 2;
 			if ($totals['vllength'] < 16) $totals['vllength'] = 16;
+			if ($totals['vlwidth'] < 10) $totals['vlwidth'] = 10;
 
 			$qs = http_build_query([
 				'nCdEmpresa'=>'',
 				'sDsSenha'=>'',
 				'nCdServico'=>'40010',
-				'sCepOrigem'=>'09853120',
+				'sCepOrigem'=>'74535290', 
 				'sCepDestino'=>$nrzipcode,
 				'nVlPeso'=>$totals['vlweight'],
 				'nCdFormato'=>'1',
@@ -238,9 +241,10 @@ class Cart extends Model {
 				'sCdAvisoRecebimento'=>'S'
 			]);
 
+						
 			$xml = simplexml_load_file("http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx/CalcPrecoPrazo?".$qs);
-
-			$result = $xml->Servicos->cServico;
+			
+			$result = $xml->Servicos->cServico;//valores retornado dos correios
 
 			if ($result->MsgErro != '') {
 
