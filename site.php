@@ -3,6 +3,8 @@ use \Principal\Page;
 use \Principal\Model\Product;
 use \Principal\Model\Category;
 use \Principal\Model\Cart;
+use \Principal\Model\Address;
+use \Principal\Model\User;
 
 $app->get('/', function () {
 
@@ -122,6 +124,58 @@ $app->post("/cart/freight", function(){
 	$cart->setFreight($_POST["zipcode"]);
 
 	echo "<script>document.location='/cart'</script>";
+	exit;
+
+});
+
+$app->get("/checkout", function(){
+
+	User::verifyLogin(false);//false pois ñ é rota administrativa
+
+	$cart = Cart::getFromSession();//pega um cart na session ou cria um
+
+	$address = new Address();
+	
+	$page = new Page();
+
+	$page->setTpl("checkout", array(
+		"cart"->$cart->getValues(),
+		"address"->$address->getValues()
+	));
+
+});
+
+$app->get("/login", function(){
+	
+	$page = new Page();
+
+	$page->setTpl("login", array(
+		"error"=>User::getError()
+	));
+
+});
+
+$app->post("/login", function(){
+
+	try {
+
+		User::login($_POST["login"], $_POST["password"]);
+		
+	} catch (Exception $e) {
+
+		User::setError($e->getMessage());
+		
+	}
+	
+	echo "<script>document.location='/checkout'</script>";
+	exit;
+
+});
+
+$app->get("/logout", function(){
+	
+	User::logout();
+	echo "<script>document.location='/login'</script>";
 	exit;
 
 });

@@ -8,6 +8,10 @@ use \Principal\DB\Sql;
 class User extends Model {
 
 	const SESSION = "User";
+	//const SECRET_IV = "HcodePhp7_Secret_IV";
+	const ERROR = "UserError";
+	const ERROR_REGISTER = "UserErrorRegister";
+	const SUCCESS = "UserSucesss";
 
 	//protected $fields = [
 	//	"iduser", "idperson", "deslogin", "despassword", "inadmin", "dtergister"
@@ -19,7 +23,7 @@ class User extends Model {
 
 		$db = new Sql(); //obj do banco
 
-		$resultadoDaConsulta = $db->select("SELECT * FROM tb_users WHERE deslogin = :LOGIN", array(
+		$resultadoDaConsulta = $db->select("SELECT * FROM tb_users a INNER JOIN tb_persons b ON a.idperson = b.idperson WHERE a.deslogin = :LOGIN", array(
 			":LOGIN"=>$login
 		));
 
@@ -30,14 +34,16 @@ class User extends Model {
 		}
 
 		
-		$dadosDoUsuario = $resultadoDaConsulta[0]; //array da tabela users do banco
+		$data = $resultadoDaConsulta[0]; //array da tabela users do banco
 		
 
-		if (password_verify($password, $dadosDoUsuario["despassword"])) {//Verifica se um password corresponde com um hash
+		if (password_verify($password, $data["despassword"])) {//Verifica se um password corresponde com um hash
 
 			$user = new User();//instancia um objeto da propria classe
+
+			$data['desperson'] = utf8_encode($data['desperson']);
 			
-			$user->setData($dadosDoUsuario);//chama um metodo da classe extendida Model passando o array da tabela recuperada
+			$user->setData($data);//chama um metodo da classe extendida Model passando o array da tabela recuperada
 
 			$_SESSION[User::SESSION] = $user->getValues();
 
@@ -60,10 +66,16 @@ class User extends Model {
 
 	public static function verifyLogin($inadmin = true)
 	{
+		//se o parametro recebido for false é rota de user comum
+		//se o parametro recebido for true é rota de user administrador
 
-		if (!User::checkLogin($inadmin)) {
+		if (!User::checkLogin($inadmin)) { //se o retorno for false entra no if
 			
-			echo "<script>document.location='/admin/login'</script>";
+			if ($inadmin) {//se $inadmin for = true é rota de de administrador
+				echo "<script>document.location='/admin/login'</script>";
+			}else {//se $inadmin for = false é rota de usuario comun
+				echo "<script>document.location='/login'</script>";
+			}
 			exit;
 
 		}
@@ -81,7 +93,7 @@ class User extends Model {
 		$sql = new Sql();
 		//chama a procedure que persisti no banco o novo usuario, faz o inner join e retorna os mesmos dados do usuario novo
 		$results = $sql->select("CALL sp_users_save(:desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array(
-			":desperson"=>$this->getdesperson(),
+			":desperson"=>utf8_decode($this->getdesperson()),
 			":deslogin"=>$this->getdeslogin(),
 			":despassword"=>$this->getdespassword(),
 			":desemail"=>$this->getdesemail(),
@@ -94,11 +106,16 @@ class User extends Model {
 
 	public function get($iduser){//recebe como parametro o id do usuario que eu quero alterar
 		$sql = new Sql();
+
 		$results = $sql->select("SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) WHERE a.iduser = :iduser", array(
 			":iduser"=>$iduser
 		));
 
-		$this->setData($results[0]);//coloca no obj o resultado da busca feita no select
+		$data = $results[0];
+
+		$data['desperson'] = utf8_encode($data['despassword']);
+
+		$this->setData($data);//coloca no obj o resultado da busca feita no select
 	}
 
 	public function update(){
@@ -107,7 +124,7 @@ class User extends Model {
 		//chama a procedure que faz um UPDATE no banco do novo usuario, faz o inner join e retorna os mesmos dados do usuario alterado
 		$results = $sql->select("CALL sp_usersupdate_save(:iduser, :desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array(
 			":iduser"=>$this->getiduser(),
-			":desperson"=>$this->getdesperson(),
+			":desperson"=>utf8_decode($this->getdesperson()),
 			":deslogin"=>$this->getdeslogin(),
 			":despassword"=>$this->getdespassword(),
 			":desemail"=>$this->getdesemail(),
@@ -145,7 +162,7 @@ class User extends Model {
 		return $user; //retorna  o obj 
 	}
 
-	public static function checkLogin($inadmin = true){
+	public static function checkLogin($inadmin = true){ //por padrão é true, mas pode ser false se for rota de usuario comun
 		
 		if (
 			!isset($_SESSION[User::SESSION]) // se a constante não foi definida
@@ -159,7 +176,7 @@ class User extends Model {
 
 		}else{
 
-			if ($inadmin === true && (bool)$_SESSION[User::SESSION]["inadmin"] === true) { //rota de admin
+			if ($inadmin === true && (bool)$_SESSION[User::SESSION]["inadmin"] === true) { //rota de administrador && usuario é administrador
 
 				return true;
 
@@ -173,6 +190,32 @@ class User extends Model {
 			}
 
 		}
+	}
+
+
+	public static function setError($msg)
+	{
+
+		$_SESSION[User::ERROR] = $msg;
+
+	}
+
+	public static function getError()
+	{
+
+		$msg = (isset($_SESSION[User::ERROR]) && $_SESSION[User::ERROR]) ? $_SESSION[User::ERROR] : '';
+
+		User::clearError();
+
+		return $msg;
+
+	}
+
+	public static function clearError()
+	{
+
+		$_SESSION[User::ERROR] = NULL;
+
 	}
 
 
