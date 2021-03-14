@@ -132,17 +132,118 @@ $app->get("/checkout", function(){
 
 	User::verifyLogin(false);//false pois ñ é rota administrativa
 
+	$address = new Address();
+
 	$cart = Cart::getFromSession();//pega um cart na session ou cria um
 
-	$address = new Address();
-	
+	if (isset($_GET["zipcode"])){ //se for definido pega do cart 
+
+		$_GET["zipcode"] = $cart->getdeszipcode();
+	}
+
+	if (isset($_GET["zipcode"])) {
+		
+		$address->loadFromCEP($_GET["zipcode"]);//coloca no obj as atributos da busca
+
+		$cart->setdeszipcode($_GET["zipcode"]);//seta no cart o cep 
+
+		$cart->save();//update do cart
+
+		$cart->getCalculateTotal();
+	}
+
+	if (!$address->getdesaddress()) $address->setdesaddress('');
+	if (!$address->getdescomplement()) $address->setdescomplement('');
+	if (!$address->getdesdistrict()) $address->setdesdistrict('');
+	if (!$address->getdescity()) $address->setdescity('');
+	if (!$address->getdesstate()) $address->setdesstate('');
+	if (!$address->getdescountry()) $address->setdescountry('');
+	if (!$address->getdeszipode()) $address->setdeszipode('');
+
 	$page = new Page();
 
 	$page->setTpl("checkout", array(
-		"cart"->$cart->getValues(),
-		"address"->$address->getValues()
+		"cart"=>$cart->getValues(),
+		"address"=>$address->getValues(),
+		"products"=>$cart->getProducts(), //function carrega products daquele cart
+		"error"=>Address::getMsgError()
 	));
 
+});
+
+$app->post("/checkout", function(){
+
+
+
+	User::verifyLogin(false);//verifica se esta logado - rota usuario comun
+
+	if (!isset($_POST["zipcode"]) || $_POST["zipcode"] === '') {
+		
+		Address::setMsgError("Informe o CEP");
+
+		echo "<script>document.location='/checkout'</script>";
+		exit;
+	}
+
+	if (!isset($_POST["desaddress"]) || $_POST["desaddress"] === '') {
+		
+		Address::setMsgError("Informe o Endereço");
+
+		echo "<script>document.location='/checkout'</script>";
+		exit;
+	}
+
+	if (!isset($_POST["desdistrict"]) || $_POST["desdistrict"] === '') {
+		
+		Address::setMsgError("Informe o Bairro");
+
+		echo "<script>document.location='/checkout'</script>";
+		exit;
+	}
+	
+	if (!isset($_POST["descity"]) || $_POST["descity"] === '') {
+		
+		Address::setMsgError("Informe a Cidade");
+
+		echo "<script>document.location='/checkout'</script>";
+		exit;
+	}	
+	
+	if (!isset($_POST["desstate"]) || $_POST["desstate"] === '') {
+		
+		Address::setMsgError("Informe o Estado");
+
+		echo "<script>document.location='/checkout'</script>";
+		exit;
+	}
+
+	if (!isset($_POST["descountry"]) || $_POST["descountry"] === '') {
+		
+		Address::setMsgError("Informe o País");
+
+		echo "<script>document.location='/checkout'</script>";
+		exit;
+	}
+
+	$user = User::getFromSession(); //carregao o user da session
+	
+	$address = new Address();
+
+	$_POST["deszipcode"] = $_POST["zipcode"]; //tive que sobrescrever o post pois o name do formulario é zipcode e quando for salvar no banco tem que ser deszipcode
+
+
+	$_POST["idperson"] = $user->getidperson();
+
+	
+	$address->setData($_POST);
+
+	$address->save(); //salva o endereco
+
+	echo "<script>document.location='/order'</script>";
+	exit;
+
+
+	
 });
 
 $app->get("/login", function(){
@@ -232,6 +333,72 @@ $app->post("/register", function(){
 	echo "<script>document.location='/checkout'</script>";
 	exit;
 
+});
+
+$app->get("/profile", function(){
+	//verifica se esta logado
+	User::verifyLogin(false);//rota de usuario comun
+	
+	$user = User::getFromSession();
+	
+	$page = new Page();
+	
+	$page->setTpl("profile", array(
+		"user"=>$user->getValues(),
+		"profileMsg"=>User::getSuccess(),
+		"profileError"=>User::getError()
+
+	));
+});
+
+$app->post("/profile", function(){
+	//verifica se ta logado
+	User::verifyLogin(false);//rota de usuario comun
+
+	if(!isset($_POST["desperson"]) || $_POST["desperson"] === '') {
+		
+		User::setError("Preencha o
+		 seu nome");
+
+		echo "<script>document.location='/profile'</script>";
+		exit;
+	}
+
+
+	if (!isset($_POST["desemail"]) || $_POST["desemail"] === '') {
+		
+		User::setError("preencha o seu e-mail");
+		echo "<script>document.location='/profile'</script>";
+		exit;
+	}
+	
+	$user = User::getFromSession();
+
+	if ($_POST["desemail"] !== $user->getdesemail()){//se alterar o email entra no if
+
+		if (User::checkLoginExist($_POST["desemail"]) === true) {//se existir email no banco igual ao que foi alterado entra no if
+			
+			User::setError("Este e-mail já está cadastrado");
+			echo "<script>document.location='/profile'</script>";
+			exit;
+		}
+	}
+
+	$_POST["inadmin"] = $user->getinadmin();
+	
+	$_POST["password"] = $user->getdespassword();
+
+	$_POST["deslogin"] = $_POST["desemail"];
+
+	$user->setData($_POST);
+
+	$user->update();
+
+	User::setSuccess("Dados alterados com sucesso");
+
+	echo "<script>document.location='/profile'</script>";
+
+	exit;
 });
 
 ?>

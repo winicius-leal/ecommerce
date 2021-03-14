@@ -12,29 +12,30 @@ class Address extends Model {
 	public static function getCEP($nrcep)
 	{
 
-		$nrcep = str_replace("-", "", $nrcep);
+		$nrcep = str_replace("-", "", $nrcep); //onde tiver hifen troca
 
-		$ch = curl_init();
+		$ch = curl_init(); //inicia a biblioteca cURL
 
 		curl_setopt($ch, CURLOPT_URL, "http://viacep.com.br/ws/$nrcep/json/");
 
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); //opcao que obtem um retorno
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); //opcao que ignora certificado SSL
 
-		$data = json_decode(curl_exec($ch), true);
+		$data = json_decode(curl_exec($ch), true); //decodifica o jason em array e coloca no $data
 
-		curl_close($ch);
+		curl_close($ch); //fecha a conexao
 
 		return $data;
 
 	}
 
-	public function loadFromCEP($nrcep)
+	public function loadFromCEP($nrcep) //recebe o CEP por parametro
 	{
 
-		$data = Address::getCEP($nrcep);
+		$data = Address::getCEP($nrcep); //recebe a resposta do webservice na $data
 
-		if (isset($data['logradouro']) && $data['logradouro']) {
+
+		if (isset($data['localidade']) && $data['localidade']) {//se foi definido e nao for vazio
 
 			$this->setdesaddress($data['logradouro']);
 			$this->setdescomplement($data['complemento']);
@@ -53,11 +54,11 @@ class Address extends Model {
 
 		$sql = new Sql();
 
-		$results = $sql->select("CALL sp_addresses_save(:idaddress, :idperson, :desaddress, :desnumber, :descomplement, :descity, :desstate, :descountry, :deszipcode, :desdistrict)", [
+		$results = $sql->select("CALL sp_addresses_save(:idaddress, :idperson, :desaddress, :descomplement, :descity, :desstate, :descountry, :deszipcode, :desdistrict)", [
 			':idaddress'=>$this->getidaddress(),
 			':idperson'=>$this->getidperson(),
 			':desaddress'=>utf8_decode($this->getdesaddress()),
-			':desnumber'=>$this->getdesnumber(),
+			//':desnumber'=>$this->getdesnumber(),    nao esquecer de colocar na chamada CALL
 			':descomplement'=>utf8_decode($this->getdescomplement()),
 			':descity'=>utf8_decode($this->getdescity()),
 			':desstate'=>utf8_decode($this->getdesstate()),
