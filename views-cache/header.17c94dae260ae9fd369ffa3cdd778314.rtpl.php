@@ -54,7 +54,7 @@
                 <div class="col-sm-6">
                     <div class="logo">
                         <h1>
-                            LOGO
+                            LEAL E-COMMERCE
                             <!-- 
                             <a href="#"><img src="img/logo.png"></a>
                             -->
