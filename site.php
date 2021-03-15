@@ -548,6 +548,80 @@ $app->get("/profile/orders/:idorder", function($idorder){
 	));
 });
 
+$app->get("/profile/change-password", function(){
+
+	User::verifyLogin(false);//verifica se eesta logado, rota de usuario comun
+
+	$page = new Page();
+
+	$page->setTpl("profile-change-password", array(
+		"changePassError"=>User::getError(),
+		"changePassSuccess"=>User::getSuccess()
+	));
+});
+
+$app->post("/profile/change-password", function(){
+
+	User::verifyLogin(false);//verifica se eesta logado, rota de usuario comun
+
+	if (!isset($_POST["current_pass"]) || $_POST["current_pass"] === '' ) {
+		
+		User::setError("Digite a senha atual");
+		echo "<script>document.location='/profile/change-password'</script>";
+		exit;
+
+	}
+
+	if (!isset($_POST["new_pass"]) || $_POST["new_pass"] === '' ) {
+		
+		User::setError("Digite a nova senha");
+		echo "<script>document.location='/profile/change-password'</script>";
+		exit;
+
+	}
+
+	if (!isset($_POST["new_pass_confirm"]) || $_POST["new_pass_confirm"] === '' ) {
+		
+		User::setError("Digite a senha de confirmação");
+		echo "<script>document.location='/profile/change-password'</script>";
+		exit;
+
+	}
+
+	if ($_POST["new_pass"] != $_POST["new_pass_confirm"]) {
+		
+		User::setError("As senhas não correspondem");
+		echo "<script>document.location='/profile/change-password'</script>";
+		exit;
+
+	}
+
+	if ($_POST["current_pass"] === $_POST["new_pass"]) {
+		
+		User::setError("Senha deve ser diferente da atual");
+		echo "<script>document.location='/profile/change-password'</script>";
+		exit;
+	}
+
+	$user = User::getFromSession();
+
+	if (!password_verify($_POST["current_pass"], $user->getdespassword())){
+		
+		User::setError("Senha esta invalida");
+		echo "<script>document.location='/profile/change-password'</script>";
+		exit;
+	}
+
+	$user->setdespassword($_POST["new_pass"]);
+
+	$user->update();
+
+	User::setSuccess("Senha alterada com sucesso !");
+
+	echo "<script>document.location='/profile/change-password'</script>";
+	exit;
+
+});
 
 
 ?>
