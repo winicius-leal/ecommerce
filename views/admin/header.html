@@ -268,6 +268,10 @@ desired effect
           <a href="/admin/product"><i class="fa fa-product-hunt"></i> <span>Produtos</span>
           </a>
         </li>
+        <li>
+          <a href="/admin/orders"><i class="fa fa-shopping-cart"></i> <span>Pedidos</span>
+          </a>
+        </li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
             <span class="pull-right-container">

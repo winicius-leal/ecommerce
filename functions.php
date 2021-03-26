@@ -49,7 +49,7 @@ function getCartVlSubTotal()
 
 	$totals = $cart->getProductsTotals();
 
-	return formatarPreco($totals['vlprice']);
+	return formatarPreco((float)$totals['vlprice']);
 
 }
 

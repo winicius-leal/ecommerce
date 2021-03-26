@@ -104,7 +104,7 @@
 
                                             <tr class="shipping">
                                                 <th>Frete</th>
-                                                <td>R$ <?php echo formatarPreco($cart["vlfreight"]); ?> <small>prazo de <?php echo htmlspecialchars( $cart["nrdays"], ENT_COMPAT, 'UTF-8', FALSE ); ?> dia(s)</small></td>
+                                                <td>R$ <?php echo formatarPreco((float)$cart["vlfreight"]); ?> <small>prazo de <?php echo htmlspecialchars( $cart["nrdays"], ENT_COMPAT, 'UTF-8', FALSE ); ?> dia(s)</small></td>
                                             </tr>
 
                                             <tr class="order-total">
