@@ -57,7 +57,7 @@
                                         </td>
 
                                         <td class="product-price">
-                                            <span class="amount">R$<?php echo formatarPreco($value1["vlprice"]); ?></span> 
+                                            <span class="amount">R$<?php echo formatarPreco((float)$value1["vlprice"]); ?></span> 
                                         </td>
 
                                         <td class="product-quantity">
@@ -69,7 +69,7 @@
                                         </td>
 
                                         <td class="product-subtotal">
-                                            <span class="amount">R$<?php echo formatarPreco($value1["vltotal"]); ?></span> 
+                                            <span class="amount">R$<?php echo formatarPreco((float)$value1["vltotal"]); ?></span> 
                                         </td>
                                     </tr>
                                     <?php } ?>
@@ -99,7 +99,7 @@
                                         <tbody>
                                             <tr class="cart-subtotal">
                                                 <th>Subtotal</th>
-                                                <td><span class="amount">R$ <?php echo formatarPreco($cart["vlsubtotal"]); ?></span></td>
+                                                <td><span class="amount">R$ <?php echo formatarPreco((float)$cart["vlsubtotal"]); ?></span></td>
                                             </tr>
 
                                             <tr class="shipping">
@@ -109,7 +109,7 @@
 
                                             <tr class="order-total">
                                                 <th>Total</th>
-                                                <td><strong><span class="amount">R$ <?php echo formatarPreco($cart["vltotal"]); ?></span></strong> </td>
+                                                <td><strong><span class="amount">R$ <?php echo formatarPreco((float)$cart["vltotal"]); ?></span></strong> </td>
                                             </tr>
                                         </tbody>
                                     </table>

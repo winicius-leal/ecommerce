@@ -53,7 +53,7 @@
                                         </td>
 
                                         <td class="product-price">
-                                            <span class="amount">R${function="formatarPreco($value.vlprice)"}</span> 
+                                            <span class="amount">R${function="formatarPreco((float)$value.vlprice)"}</span> 
                                         </td>
 
                                         <td class="product-quantity">
@@ -65,7 +65,7 @@
                                         </td>
 
                                         <td class="product-subtotal">
-                                            <span class="amount">R${function="formatarPreco($value.vltotal)"}</span> 
+                                            <span class="amount">R${function="formatarPreco((float)$value.vltotal)"}</span> 
                                         </td>
                                     </tr>
                                     {/loop}
@@ -94,7 +94,7 @@
                                         <tbody>
                                             <tr class="cart-subtotal">
                                                 <th>Subtotal</th>
-                                                <td><span class="amount">R$ {function="formatarPreco($cart.vlsubtotal)"}</span></td>
+                                                <td><span class="amount">R$ {function="formatarPreco((float)$cart.vlsubtotal)"}</span></td>
                                             </tr>
 
                                             <tr class="shipping">
@@ -104,7 +104,7 @@
 
                                             <tr class="order-total">
                                                 <th>Total</th>
-                                                <td><strong><span class="amount">R$ {function="formatarPreco($cart.vltotal)"}</span></strong> </td>
+                                                <td><strong><span class="amount">R$ {function="formatarPreco((float)$cart.vltotal)"}</span></strong> </td>
                                             </tr>
                                         </tbody>
                                     </table>
