@@ -256,15 +256,6 @@ class User extends Model {
 
 	}
 
-	public static function getPasswordHash($password)
-	{
-
-		return password_hash($password, PASSWORD_DEFAULT, [
-			'cost'=>12
-		]);
-
-	}
-
 
 	public static function setSuccess($msg)
 	{
@@ -313,6 +304,27 @@ class User extends Model {
 		
 	}
 
+	public function setPassword($password){
+		
+		$sql = new Sql();
+
+		$sql->query("UPDATE tb_users SET despassword = :password WHERE iduser = :iduser", array(
+			":password"=>$password, 
+			":iduser"=>$this->getiduser()
+		));
+	}
+
+	public static function getPasswordHash($password)
+	{
+
+		return password_hash($password, PASSWORD_DEFAULT, [
+			'cost'=>12
+		]);
+
+	}
+	
+
+	
 
 
 }
