@@ -29,19 +29,19 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '3cb8bb95e4b361fdcb6a34cc1ad27933b99bfa69',
+    'reference' => 'cc8979f138a26b0471b5055a54ddd5dc6a64b513',
     'name' => 'winicius-leal/ecommerce',
   ),
   'versions' => 
   array (
     'guzzlehttp/guzzle' => 
     array (
-      'pretty_version' => '7.3.0',
-      'version' => '7.3.0.0',
+      'pretty_version' => '6.3.0',
+      'version' => '6.3.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '7008573787b430c1c1f650e3722d9bba59967628',
+      'reference' => 'f4db5a78a5ea468d4831de7f0bf9d9415e348699',
     ),
     'guzzlehttp/promises' => 
     array (
@@ -69,22 +69,6 @@ private static $installed = array (
       array (
       ),
       'reference' => 'b18cb98131bd83103ccb26a888fdfe3177b8a663',
-    ),
-    'psr/http-client' => 
-    array (
-      'pretty_version' => '1.0.1',
-      'version' => '1.0.1.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '2dfb5f6c5eff0e91e20e913f8c5452ed95b86621',
-    ),
-    'psr/http-client-implementation' => 
-    array (
-      'provided' => 
-      array (
-        0 => '1.0',
-      ),
     ),
     'psr/http-message' => 
     array (
@@ -136,7 +120,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '3cb8bb95e4b361fdcb6a34cc1ad27933b99bfa69',
+      'reference' => 'cc8979f138a26b0471b5055a54ddd5dc6a64b513',
     ),
   ),
 );

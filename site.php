@@ -220,6 +220,14 @@ $app->post("/checkout", function(){
 		exit;
 	}
 
+	if (strlen($_POST["desstate"]) != 2 ) {
+		
+		Address::setMsgError("Informe o Estado em forma de UF, Exemplo (SP...)");
+
+		echo "<script>document.location='/checkout'</script>";
+		exit;
+	}
+
 	if (!isset($_POST["descountry"]) || $_POST["descountry"] === '') {
 		
 		Address::setMsgError("Informe o País");
@@ -258,7 +266,9 @@ $app->post("/checkout", function(){
 
 	$order->save();
 
-	echo "<script>document.location='/order/".$order->getidorder()."'</script>";
+	$order->toSession();
+
+	echo "<script>document.location='/payment'</script>";
 	exit;
 
 

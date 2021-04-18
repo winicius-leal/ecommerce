@@ -187,6 +187,27 @@ class Cart extends Model {
 
 	}
 
+	public function getProducts2()
+	{
+
+		$sql = new Sql();
+
+		$rows = $sql->select("
+			SELECT c.vlfreight, b.idproduct, b.desproduct , b.vlprice, b.vlwidth, b.vlheight, b.vllength, b.vlweight, b.desurl, COUNT(*) AS nrqtd, SUM(b.vlprice) AS vltotal 
+			FROM tb_cartsproducts a 
+			INNER JOIN tb_products b ON a.idproduct = b.idproduct
+			INNER JOIN tb_carts c ON a.idcart = c.idcart 
+			WHERE a.idcart = :idcart AND a.dtremoved IS NULL 
+			GROUP BY c.vlfreight, b.idproduct, b.desproduct , b.vlprice, b.vlwidth, b.vlheight, b.vllength, b.vlweight, b.desurl 
+			ORDER BY b.desproduct
+		", [
+			':idcart'=>$this->getidcart()
+		]);
+
+		return Product::checkList($rows);
+
+	}
+
 	public function getProductsTotals()
 	{
 

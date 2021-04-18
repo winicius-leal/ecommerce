@@ -22,7 +22,10 @@
     <link rel="stylesheet" href="/resoucers/site/css/owl.carousel.css">
     <link rel="stylesheet" href="/resoucers/site/css/style.css">
     <link rel="stylesheet" href="/resoucers/site/css/responsive.css">
- 
+    
+    <script>
+        window.scripts = [];
+    </script>
   </head>
   <body>
    

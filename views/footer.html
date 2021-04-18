@@ -83,6 +83,8 @@
     
     <!-- jQuery easing -->
     <script src="/resoucers/site/js/jquery.easing.1.3.min.js"></script>
+    <!-- Handlerbars -->
+    <script type="text/javascript" src="/resoucers/site/js/handlebars-v4.0.10.js"></script>
     
     <!-- Main Script -->
     <script src="/resoucers/site/js/main.js"></script>
@@ -90,5 +92,20 @@
     <!-- Slider -->
     <script type="text/javascript" src="/resoucers/site/js/bxslider.min.js"></script>
 	<script type="text/javascript" src="/resoucers/site/js/script.slider.js"></script>
+
+    <script>
+
+        $(function(){
+
+            if (scripts instanceof Array) {
+
+                $.each(scripts, function(index, fn){
+
+                    if (typeof fn === 'function') fn();
+
+                });
+            }
+        });
+    </script>
   </body>
 </html>
