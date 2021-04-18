@@ -56,6 +56,7 @@ $app->get('/product/:desurl', function ($desurl) {
 });
 
 $app->get('/cart', function () {
+
 	$cart = new Cart();
 	$cart = $cart->getFromSession();
 	$page = new Page();
