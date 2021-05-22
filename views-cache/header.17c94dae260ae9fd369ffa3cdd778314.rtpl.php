@@ -22,7 +22,10 @@
     <link rel="stylesheet" href="/resoucers/site/css/owl.carousel.css">
     <link rel="stylesheet" href="/resoucers/site/css/style.css">
     <link rel="stylesheet" href="/resoucers/site/css/responsive.css">
- 
+    
+    <script>
+        window.scripts = [];
+    </script>
   </head>
   <body>
    
@@ -54,10 +57,9 @@
                 <div class="col-sm-6">
                     <div class="logo">
                         <h1>
-                            LEAL E-COMMERCE
-                            <!-- 
-                            <a href="#"><img src="img/logo.png"></a>
-                            -->
+                        
+                            <a href="/"><img src="/resoucers/site/img/logo.png"></a>
+                            
                         </h1>
                     </div>
                 </div>
@@ -84,8 +86,8 @@
                 </div> 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="/">Home</a></li>
-                        <li><a href="/">Produtos</a></li>
+                        <li class=""><a href="/">Home</a></li>
+                        <li><a href="/allproducts">Produtos</a></li>
                         <li><a href="/cart">Carrinho</a></li>
                     </ul>
                 </div>  

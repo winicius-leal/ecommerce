@@ -4,10 +4,10 @@ namespace Principal\DB;
 
 class Sql {
 
-	const HOSTNAME = "127.0.0.1";
+	const HOSTNAME = "127.0.0.1";//127.0.0.1
 	const USERNAME = "root";
 	const PASSWORD = "";
-	const DBNAME = "ecommerce2";
+	const DBNAME = "ecommerce";
 
 	private $conn;
 

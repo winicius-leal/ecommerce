@@ -8,7 +8,8 @@ use \Principal\DB\Sql;
 class Product extends Model {
 
 
-	public function listAll(){
+	public static function listAll(){
+
 		$db = new Sql();
 		$dados = $db->select("SELECT * FROM tb_products ORDER BY desproduct");
 		return $dados ;
@@ -106,6 +107,7 @@ class Product extends Model {
 	}
 
 	public function addPhoto($file){
+
 		
 		$extension = explode(".", $file["name"]);
 		$extension = end($extension);
@@ -137,6 +139,8 @@ class Product extends Model {
 		imagejpeg($image, $dist);
 		imagedestroy($image);
 		$this->checkPhoto();
+
+		exit;
 
 	}
 

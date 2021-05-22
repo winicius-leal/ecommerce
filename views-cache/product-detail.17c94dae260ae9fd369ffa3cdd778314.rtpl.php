@@ -60,8 +60,11 @@
                                     </ul>
                                     <div class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade in active" id="home">
-                                            <h2>Descrição do Produto</h2>  
-                                            <p><?php echo htmlspecialchars( $product["descriproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
+                                            
+                                            <h2 style="text-transform:uppercase;background-color: #A9A9A9; text-align: center; font-family: Algerian">OQUE É <?php echo htmlspecialchars( $product["desproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?>
+
+                                            </h2>  
+                                            <p style="text-transform:uppercase; font-family: Algerian"><?php echo htmlspecialchars( $product["descriproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?></p>
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade" id="profile">
                                             <h2>Reviews</h2>

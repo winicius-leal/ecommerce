@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="latest-product">
-                        <h2 class="section-title">PRODUTOS</h2>
+                        <h2 class="section-title" style="font-family: Algeriam">Mais Vendidos</h2>
                         <div class="product-carousel">
 
                             <?php $counter1=-1;  if( isset($products) && ( is_array($products) || $products instanceof Traversable ) && sizeof($products) ) foreach( $products as $key1 => $value1 ){ $counter1++; ?>
@@ -29,11 +29,10 @@
 
                             
 
-                        </div>
+                        </div>                          
                     </div>
                 </div>
             </div>
         </div>
     </div> <!-- End main content area -->
-        
-    
+

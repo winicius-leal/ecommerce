@@ -4,8 +4,8 @@
             <div class="row">
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-about-us">
-                        <h2>Hcode Store</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
+                        <h2>LEAL ECOMMERCE</h2>
+                        <p>DESCRICAO DA EMPRESA</p>
                         <div class="footer-social">
                             <a href="https://www.facebook.com/hcodebr" target="_blank"><i class="fa fa-facebook"></i></a>
                             <a href="https://twitter.com/hcodebr" target="_blank"><i class="fa fa-twitter"></i></a>
@@ -37,11 +37,11 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="footer-newsletter">
                         <h2 class="footer-wid-title">Newsletter</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus!</p>
+                        <p>Faça parte da nossa lista de transmissão e receba nossas promoções.</p>
                         <div class="newsletter-form">
                             <form action="#">
-                                <input type="email" placeholder="Type your email">
-                                <input type="submit" value="Subscribe">
+                                <input type="email" placeholder="Seu email">
+                                <input type="submit" value="Inscrever-se">
                             </form>
                         </div>
                     </div>
@@ -83,6 +83,8 @@
     
     <!-- jQuery easing -->
     <script src="/resoucers/site/js/jquery.easing.1.3.min.js"></script>
+    <!-- Handlerbars -->
+    <script type="text/javascript" src="/resoucers/site/js/handlebars-v4.0.10.js"></script>
     
     <!-- Main Script -->
     <script src="/resoucers/site/js/main.js"></script>
@@ -90,5 +92,20 @@
     <!-- Slider -->
     <script type="text/javascript" src="/resoucers/site/js/bxslider.min.js"></script>
 	<script type="text/javascript" src="/resoucers/site/js/script.slider.js"></script>
+
+    <script>
+
+        $(function(){
+
+            if (scripts instanceof Array) {
+
+                $.each(scripts, function(index, fn){
+
+                    if (typeof fn === 'function') fn();
+
+                });
+            }
+        });
+    </script>
   </body>
 </html>

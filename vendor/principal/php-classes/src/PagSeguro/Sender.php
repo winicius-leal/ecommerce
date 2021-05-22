@@ -64,10 +64,10 @@ class Sender {
 		$cpf = $dom->importNode($cpf,true);//importa um nó DOM e traz os filhos com o parametro true
 		$documents->appendChild($cpf);//cria um nó filho com o nó importado
 
-		/*
+		
 		$hash = $dom->createElement("hash", $this->hash);
 		$sender->appendChild($hash);
-		*/
+		
 
 
 		return $sender;

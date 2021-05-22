@@ -4,7 +4,7 @@ namespace Principal\PagSeguro;
 
     class Config {
 
-        const SANDBOX = true;
+        const SANDBOX = false;
 
         const SANDBOX_EMAIL = "winiciusleal@hotmail.com";
         const SANDBOX_TOKEN = "933C12C0BA3849F49C72B04D4B1A00D9";
@@ -58,7 +58,7 @@ namespace Principal\PagSeguro;
             }
         }
 
-        public function getUrlTransaction(){
+        public static function getUrlTransaction(){
             if(Config::SANDBOX === true){
                 return Config::SANDBOX_URL_TRANSACTION;
             }else{
@@ -66,7 +66,7 @@ namespace Principal\PagSeguro;
             }
         }
 
-        public function getNotificationTransactionURL(){
+        public static function getNotificationTransactionURL(){
             if(Config::SANDBOX === true){
                 return Config::SANDBOX_URL_NOTIFICATION;
             }else{

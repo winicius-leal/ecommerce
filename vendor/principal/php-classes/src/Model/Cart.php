@@ -17,10 +17,11 @@ class Cart extends Model {
 		
 		$cart = new Cart();
 
+
+
 		if (isset($_SESSION[Cart::SESSION]) && (int)$_SESSION[Cart::SESSION]['idcart'] > 0) { //se existir a sessao e idcart for > 0 significa que ja existe esse carrinho no banco de dados e ele ja esta na SESSION
 			
 			$cart->get((int)$_SESSION[Cart::SESSION]['idcart']);//chama o get que vai no banco e retorna o value desse carrinho
-
 			
 
 		} else {

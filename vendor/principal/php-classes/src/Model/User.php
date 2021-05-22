@@ -18,11 +18,9 @@ class User extends Model {
 	//];
 	
 
-	public static function login($login, $password):User
-	{
+	public static function login($login, $password):User {
 
 		$db = new Sql(); //obj do banco
-
 		$resultadoDaConsulta = $db->select("SELECT * FROM tb_users a INNER JOIN tb_persons b ON a.idperson = b.idperson WHERE a.deslogin = :LOGIN", array(
 			":LOGIN"=>$login
 		));
@@ -82,7 +80,7 @@ class User extends Model {
 
 	}
 
-	public function listAll(){
+	public static function listAll(){
 		$db = new Sql();
 		$dados = $db->select("SELECT * FROM tb_users a INNER JOIN tb_persons b USING(idperson) ORDER BY (b.desperson)");
 		return $dados ;
@@ -113,7 +111,7 @@ class User extends Model {
 
 		$data = $results[0];
 
-		$data['desperson'] = utf8_encode($data['despassword']);
+		$data['desperson'] = utf8_encode($data['desperson']);
 
 		$this->setData($data);//coloca no obj o resultado da busca feita no select
 	}

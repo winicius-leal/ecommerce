@@ -43,16 +43,16 @@ class Document {
 	        return false;
 
 	    for ($i = 0, $j = 10, $sum = 0; $i < 9; $i++, $j--)
-	        $sum += $number{$i} * $j;
+	        $sum += $number[$i] * $j;
 	    $rest = $sum % 11;
-	    if ($number{9} != ($rest < 2 ? 0 : 11 - $rest))
+	    if ($number[9] != ($rest < 2 ? 0 : 11 - $rest))
 	        return false;
 
 	    for ($i = 0, $j = 11, $sum = 0; $i < 10; $i++, $j--)
-	        $sum += $number{$i} * $j;
+	        $sum += $number[$i] * $j;
 	    $rest = $sum % 11;
 
-	    return ($number{10} == ($rest < 2 ? 0 : 11 - $rest));
+	    return ($number[10] == ($rest < 2 ? 0 : 11 - $rest));
 	}
 
 	public function getDOMElement():DOMElement {
