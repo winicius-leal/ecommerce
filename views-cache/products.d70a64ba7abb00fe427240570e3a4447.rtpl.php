@@ -28,12 +28,17 @@
                   <tr>
                     <th style="width: 10px">ID</th>
                     <th>Nome da Produto</th>
-                    <th>Descricao</th>
                     <th>Preço</th>
                     <th>Largura</th>
                     <th>Altura</th>
                     <th>Comprimento</th>
                     <th>Peso</th>
+                    <th>Descricao</th>
+                    <th>Tamanho</th>
+                    <th>Uso</th>
+                    <th>Recomendação</th>
+                    <th>Sugestão</th>
+                    <th>Foto</th>
                     <th style="width: 140px">&nbsp;</th>
                   </tr>
                 </thead>
@@ -43,12 +48,19 @@
                   <tr>
                     <td><?php echo htmlspecialchars( $value1["idproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["desproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
-                    <td><?php echo htmlspecialchars( $value1["descriproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["vlprice"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["vlwidth"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["vlheight"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["vllength"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
                     <td><?php echo htmlspecialchars( $value1["vlweight"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                    <td><?php echo htmlspecialchars( $value1["descriproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                    <td><?php echo htmlspecialchars( $value1["sizeproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                    <td><?php echo htmlspecialchars( $value1["useproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                    <td><?php echo htmlspecialchars( $value1["recommendationproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                    <td><?php echo htmlspecialchars( $value1["suggestionproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?></td>
+                    <?php if( $value1["statusphoto"] == 'Produto não possui foto'  ){ ?><td style="color: red"> <b><?php echo htmlspecialchars( $value1["statusphoto"], ENT_COMPAT, 'UTF-8', FALSE ); ?></b></td><?php }else{ ?><td style="color: green"> <b><?php echo htmlspecialchars( $value1["statusphoto"], ENT_COMPAT, 'UTF-8', FALSE ); ?></b></td>
+                    <?php } ?>
+
                     <td>
                       <a href="/admin/product/<?php echo htmlspecialchars( $value1["idproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Editar</a>
                       <a href="/admin/product/<?php echo htmlspecialchars( $value1["idproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?>/delete" onclick="return confirm('Deseja realmente excluir este registro?')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Excluir</a>

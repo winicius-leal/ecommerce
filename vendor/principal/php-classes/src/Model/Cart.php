@@ -174,9 +174,10 @@ class Cart extends Model {
 		$sql = new Sql();
 
 		$rows = $sql->select("
-			SELECT b.idproduct, b.desproduct , b.vlprice, b.vlwidth, b.vlheight, b.vllength, b.vlweight, b.desurl, COUNT(*) AS nrqtd, SUM(b.vlprice) AS vltotal 
+			SELECT b.idproduct, b.desproduct , b.vlprice, b.vlwidth, b.vlheight, b.vllength, b.vlweight, b.desurl, COUNT(*) AS nrqtd, SUM(b.vlprice) AS vltotal, p.namephoto
 			FROM tb_cartsproducts a 
-			INNER JOIN tb_products b ON a.idproduct = b.idproduct 
+			INNER JOIN tb_products b ON a.idproduct = b.idproduct
+			INNER JOIN tb_photos p ON p.idproducts = b.idproduct AND p.photomain = 1
 			WHERE a.idcart = :idcart AND a.dtremoved IS NULL 
 			GROUP BY b.idproduct, b.desproduct , b.vlprice, b.vlwidth, b.vlheight, b.vllength, b.vlweight, b.desurl 
 			ORDER BY b.desproduct
@@ -184,7 +185,10 @@ class Cart extends Model {
 			':idcart'=>$this->getidcart()
 		]);
 
-		return Product::checkList($rows);
+		//rows traz os produtos relacionados ao carrinho em um array com os seguintes atributos: idproduct desproduct vlprice vlwidth vlheight vllength vlweight desurl nrqtd vltotal
+        return $rows;
+
+		//return Product::checkList($rows);
 
 	}
 
@@ -341,9 +345,9 @@ class Cart extends Model {
 	public function getValues()
 	{
 
-		$this->getCalculateTotal();
+		$this->getCalculateTotal(); //calcula todos os produtos e adiciona ao obj Cart setvlsubtotal(SUBTOTAL) e setvltotal(TOTAL)
 
-		return parent::getValues();
+		return parent::getValues(); // retorna o obj Cart com total e subtotal de produtos
 
 	}
 
@@ -352,12 +356,11 @@ class Cart extends Model {
 
 		$this->updateFreight();
 
-		$totals = $this->getProductsTotals();
+		$totals = $this->getProductsTotals(); //retorna total dos produtos : ["vlprice"]=>"" ["vlwidth"]=>"" ["vlheight"]=>"" ["vllength"]=>"" ["vlweight"]=>"" ["nrqtd"]=>""
 
+		$this->setvlsubtotal($totals['vlprice']); //adiciona atributo subtotal no obj Cart
 
-		$this->setvlsubtotal($totals['vlprice']);
-
-		$this->setvltotal($totals['vlprice'] + (float)$this->getvlfreight());
+		$this->setvltotal($totals['vlprice'] + (float)$this->getvlfreight());////adiciona atributo total no obj Cart
 
 
 	}

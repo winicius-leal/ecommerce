@@ -26,36 +26,57 @@
         <form role="form" action="/admin/product/create" method="post">
           <div class="box-body">
             <div class="form-group">
-              <label for="desproduct">Nome da produto</label>
+              <label for="desproduct">NOME DO PRODUTO</label>
               <input type="text" class="form-control" id="desproduct" name="desproduct" placeholder="Digite o nome do produto">
             </div>
+
             <div class="form-group">
-              <label for="descriproduct">Descrção do produto</label>
-              <input type="text" class="form-control" id="descriproduct" name="descriproduct" placeholder="Digite a descrção do produto">
-            </div>
-            <div class="form-group">
-              <label for="vlprice">Preço</label>
+              <label for="vlprice">PREÇO</label>
               <input type="number" class="form-control" id="vlprice" name="vlprice" step="0.01" placeholder="0.00">
             </div>
             <div class="form-group">
-              <label for="vlwidth">Largura</label>
+              <label for="vlwidth">LARGURA</label>
               <input type="number" class="form-control" id="vlwidth" name="vlwidth" step="0.01" placeholder="0.00">
             </div>
             <div class="form-group">
-              <label for="vlheight">Altura</label>
+              <label for="vlheight">ALTURA</label>
               <input type="number" class="form-control" id="vlheight" name="vlheight" step="0.01" placeholder="0.00">
             </div>
             <div class="form-group">
-              <label for="vllength">Comprimento</label>
+              <label for="vllength">COMPRIMENTO</label>
               <input type="number" class="form-control" id="vllength" name="vllength" step="0.01" placeholder="0.00">
             </div>
             <div class="form-group">
-              <label for="vlweight">Peso</label>
+              <label for="vlweight">PESO</label>
               <input type="number" class="form-control" id="vlweight" name="vlweight" step="0.01" placeholder="0.00">
             </div>
             <div class="form-group">
               <label for="desurl">URL</label>
               <input type="text" class="form-control" id="desurl" name="desurl" placeholder="URL do produto">
+            </div>
+
+            <div class="box-header with-border">
+              <h3 class="box-title">INFORMATIVOS</h3>
+            </div>
+            <div class="form-group">
+              <label for="descriproduct">DESCRIÇÃO DO PRODUTO</label>
+              <input type="text" class="form-control" id="descriproduct" name="descriproduct" placeholder="Digite a descrção do produto">
+            </div>
+            <div class="form-group">
+              <label for="sizeproduct">TAMANHO</label>
+              <input type="text" class="form-control" id="sizeproduct" name="sizeproduct" placeholder="TAMANHO INFORMATIVO DO PRODUTO">
+            </div>
+            <div class="form-group">
+              <label for="useproduct">PORQUE USAR</label>
+              <input type="text" class="form-control" id="useproduct" name="useproduct" placeholder="PORQUE USAR O PRODUTO">
+            </div>
+            <div class="form-group">
+              <label for="recommendationproduct">RECOMENDAÇÕES</label>
+              <input type="text" class="form-control" id="recommendationproduct" name="recommendationproduct" placeholder="RECOMENDAÇÕES">
+            </div>
+            <div class="form-group">
+              <label for="suggestionproduct">SUGESTÃO DE USO</label>
+              <input type="text" class="form-control" id="suggestionproduct" name="suggestionproduct" placeholder="SUGESTÃO DE USO">
             </div>
           </div>
           <!-- /.box-body -->

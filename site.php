@@ -10,21 +10,20 @@ use \Principal\Model\OrderStatus;
 
 $app->get('/', function () {
 
-	$products = Product::listAll();
-	
+	$products = Product::listAllProductsMainPhotos();
 	$page = new Page();
-	
-	$page->setTpl("index", array("products"=>Product::checkList($products)));
+	//$page->setTpl("index", array("products"=>Product::checkList($products)));
+    $page->setTpl("index", array("products"=>$products));
 
 });
 
 $app->get('/allproducts', function () {
 
-	$products = Product::listAll();
+	$products = Product::listAllProductsMainPhotos();
 	
 	$page = new Page();
 	
-	$page->setTpl("allproducts", array("products"=>Product::checkList($products)));
+	$page->setTpl("allproducts", array("products"=>$products));
 
 });
 
@@ -59,8 +58,8 @@ $app->get('/categories/:idcategory', function ($idcategory) {
 
 $app->get('/product/:desurl', function ($desurl) {	
 	$product = new Product();
-	$product->getFromURL($desurl);
-	$page = new Page();
+	$product->getFromURL($desurl); //pega do banco e coloca no obj
+    $page = new Page();
 	$page->setTpl("product-detail", array("product"=>$product->getValues(),"categories"=>$product->getCategories()));
 
 });
@@ -71,21 +70,21 @@ $app->get('/cart', function () {
 	$cart = $cart->getFromSession();
 	$page = new Page();
 	$page->setTpl("cart", array(
-		"cart"=>$cart->getValues(),
-		"products"=>$cart->getProducts(),
+		"cart"=>$cart->getValues(),  // recebe o obj Cart com total e subtotal de produtos
+		"products"=>$cart->getProducts(), //recebe arrays  de produtos com atributos adicionais de qtd, total e namephoto
 		"error"=>Cart::getMsgError()
 	));
 
 });
 
 $app->get("/cart/:idproduct/add", function($idproduct){
-	
+
 	$product = new Product();
 
 	$product->get((int)$idproduct);//setData no obj os dados do produto
 
 	$cart = Cart::getFromSession();//pega o carrinho da session ou cria um
-	
+
 	$qtd = (isset($_GET['qtd'])) ? (int)$_GET['qtd'] : 1; //if ternario, se for 
 
 	for ($i = 0; $i < $qtd; $i++) {
@@ -143,11 +142,14 @@ $app->post("/cart/freight", function(){
 
 $app->get("/checkout", function(){
 
-	User::verifyLogin(false);//false pois ñ é rota administrativa
+	User::verifyLogin(false);//verifica se esta logado e parametro false pois ñ é rota administrativa
 
-	$address = new Address();
+	$address = new Address(); // instancia um obj do endereço
 
 	$cart = Cart::getFromSession();//pega um cart na session ou cria um
+
+    var_dump($cart);
+    exit;
 
 	if (isset($_GET["zipcode"])){ //se for definido pega do cart 
 

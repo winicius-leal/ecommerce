@@ -1,3 +1,37 @@
+.title-descricao{
+    display: block;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    font-size: 36px;
+    letter-spacing: 3px;
+    margin: 60px 0 20px;
+    line-height: initial;
+    font-family: 'Rubik', 'Lucida Grande', sans-serif;
+}
+.text-descricao{
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-family: 'Rubik', 'Lucida Grande', sans-serif;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    text-align:justify;
+}
+.title-opcoes{
+    display: block;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: left;
+    font-size: 32px;
+    letter-spacing: 3px;
+    margin: 60px 0 20px;
+    line-height: initial;
+    font-family: 'Rubik', 'Lucida Grande', sans-serif;
+}
 .floatleft { float: left }
 .floatright { float: right }
 .alignleft {
@@ -681,7 +715,7 @@ width: 10px;
 .product-big-title-area {background: url("../img/crossword.png") repeat scroll 0 0 #000000}
 
 .product-bit-title h2 {
-  font-family: raleway;
+  font-family:  "Times New Roman", Times, serif;
   font-size: 50px;
   font-weight: 200;
   margin: 0;

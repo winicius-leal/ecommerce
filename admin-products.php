@@ -30,19 +30,20 @@ $app->post('/admin/product/create', function () {
 $app->get('/admin/product/:idproduct', function ($idproduct) {
 	User::verifyLogin();
 	$product = new Product();
-	$product->get((int)$idproduct);
-
+    $product->listProductsAndPhotos((int)$idproduct);
+    //$product->get((int)$idproduct);
 	$page = new PageAdmin();
 	$page->setTpl("products-update", array("product"=>$product->getValues()));
 });
 
 $app->post('/admin/product/:idproduct', function ($idproduct) {
-	User::verifyLogin();
+
+    User::verifyLogin();
 	$product = new Product();
 	$product->get((int)$idproduct);
 	$product->setData($_POST);
-	$product->save();
-	$product->addPhoto($_FILES["file"]);
+    $product->save();
+	$product->addPhoto($_FILES, $idproduct);
 	echo "<script>document.location='/admin/product'</script>";
 	exit;
 });

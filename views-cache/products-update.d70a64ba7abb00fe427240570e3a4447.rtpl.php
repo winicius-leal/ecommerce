@@ -25,10 +25,6 @@
               <input type="text" class="form-control" id="desproduct" name="desproduct" placeholder="Digite o nome do produto" value="<?php echo htmlspecialchars( $product["desproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
             <div class="form-group">
-              <label for="descriproduct">Descrição do produto</label>
-              <input type="text" class="form-control" id="descriproduct" name="descriproduct" placeholder="Digite a descricao do produto" value="<?php echo htmlspecialchars( $product["descriproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
-            </div>
-            <div class="form-group">
               <label for="desurl">URL</label>
               <input type="text" class="form-control" id="desurl" name="desurl" placeholder="Digite a URL do produto" value="<?php echo htmlspecialchars( $product["desurl"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
@@ -53,13 +49,47 @@
               <input type="number" class="form-control" id="vlweight" name="vlweight" step="0.01" placeholder="0.00" value="<?php echo htmlspecialchars( $product["vlweight"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
             </div>
             <div class="form-group">
-              <label for="file">Foto</label>
-              <input type="file" class="form-control" id="file" name="file" value="<?php echo htmlspecialchars( $product["vlweight"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+              <label for="descriproduct">Descrição do produto</label>
+              <input type="text" class="form-control" id="descriproduct" name="descriproduct" placeholder="Digite a descricao do produto" value="<?php echo htmlspecialchars( $product["descriproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+            </div>
+            <div class="form-group">
+              <label for="sizeproduct">TAMANHO</label>
+              <input type="text" class="form-control" id="sizeproduct" name="sizeproduct" placeholder="TAMANHO INFORMATIVO DO PRODUTO" value="<?php echo htmlspecialchars( $product["sizeproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+            </div>
+            <div class="form-group">
+              <label for="useproduct">PORQUE USAR</label>
+              <input type="text" class="form-control" id="useproduct" name="useproduct" placeholder="PORQUE USAR O PRODUTO" value="<?php echo htmlspecialchars( $product["useproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+            </div>
+            <div class="form-group">
+              <label for="recommendationproduct">RECOMENDAÇÕES</label>
+              <input type="text" class="form-control" id="recommendationproduct" name="recommendationproduct" placeholder="RECOMENDAÇÕES" value="<?php echo htmlspecialchars( $product["recommendationproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+            </div>
+            <div class="form-group">
+              <label for="suggestionproduct">SUGESTÃO DE USO</label>
+              <input type="text" class="form-control" id="suggestionproduct" name="suggestionproduct" placeholder="SUGESTÃO DE USO" value="<?php echo htmlspecialchars( $product["suggestionproduct"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+            </div>
+            <div class="form-group">
+
+              <label for="file">IMAGEM PRINCIPAL</label>
+              <input type="file"  class="form-control" id="file" name="principal" multiple value="<?php echo htmlspecialchars( $product["vlweight"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+
               <div class="box box-widget">
                 <div class="box-body">
-                  <img class="img-responsive" id="image-preview" src="<?php echo htmlspecialchars( $product["desphoto"], ENT_COMPAT, 'UTF-8', FALSE ); ?>" alt="Photo">
+                  <img class="img-responsive" id="image-preview" src="<?php if( isset($product["photoprincipal"]) ){ ?><?php echo htmlspecialchars( $product["photoprincipal"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" alt="PRINCIPAL">
                 </div>
               </div>
+
+
+
+              <label for="file">IMAMGEM TABELA NUTRICIONAL</label>
+              <input type="file" class="form-control" id="file" name="tabela" multiple value="<?php echo htmlspecialchars( $product["vlweight"], ENT_COMPAT, 'UTF-8', FALSE ); ?>">
+
+              <div class="box box-widget">
+                <div class="box-body">
+                  <img class="img-responsive" id="image-preview" src="<?php if( isset($product["phototabela"]) ){ ?><?php echo htmlspecialchars( $product["phototabela"], ENT_COMPAT, 'UTF-8', FALSE ); ?><?php } ?>" alt="TABELA">
+                </div>
+              </div>
+
             </div>
           </div>
           </div>
