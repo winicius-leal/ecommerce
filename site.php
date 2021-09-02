@@ -148,8 +148,7 @@ $app->get("/checkout", function(){
 
 	$cart = Cart::getFromSession();//pega um cart na session ou cria um
 
-    var_dump($cart);
-    exit;
+
 
 	if (isset($_GET["zipcode"])){ //se for definido pega do cart 
 
@@ -158,7 +157,7 @@ $app->get("/checkout", function(){
 
 	if (isset($_GET["zipcode"])) {
 		
-		$address->loadFromCEP($_GET["zipcode"]);//coloca no obj as atributos da busca
+		$address->loadFromCEP($_GET["zipcode"]);//busca o endereco por api do VIACEP
 
 		$cart->setdeszipcode($_GET["zipcode"]);//seta no cart o cep 
 
@@ -166,6 +165,8 @@ $app->get("/checkout", function(){
 
 		$cart->getCalculateTotal();
 	}
+
+
 
 	if (!$address->getdesaddress()) $address->setdesaddress('');
 	if (!$address->getdesnumber()) $address->setdesnumber('');
@@ -175,6 +176,8 @@ $app->get("/checkout", function(){
 	if (!$address->getdesstate()) $address->setdesstate('');
 	if (!$address->getdescountry()) $address->setdescountry('');
 	if (!$address->getdeszipode()) $address->setdeszipode('');
+
+
 
 	$page = new Page();
 
